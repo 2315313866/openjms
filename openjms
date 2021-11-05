@@ -1,0 +1,61 @@
+#!/usr/bin/bash
+
+# 检查传入参数
+if [[ $# -ne 1  ]]; then
+    echo -e "\033[31mUsage: $0 [start | stop | restart | reload] \033[0m"
+    exit 1;
+fi
+
+
+# Check if user is root
+if [ $(id -u) != "0" ]; then
+    echo -e "\033[31mError: You must be root to run this script, please use root to run openjms\033[0m"
+    exit 1;
+fi
+
+# 进入工作目录
+dir_path=${0}
+if [[ ! "${0}" == "openjms" ]]; then
+    cd ${dir_path%/*};
+fi
+
+. include/menu.sh
+. include/thread_task.sh
+. scripts/data_array.sh
+. scripts/check_conf.sh
+. var/data_conf.sh
+. include/openjms_manager.sh
+
+
+
+
+
+
+
+case $1 in
+    start)
+            start;
+
+        ;;
+    stop)
+            stop;
+
+        ;;
+    restart)
+
+            stop;
+            start;
+        ;;
+    reload)
+
+            reload;
+        ;;
+    status)
+            status;
+
+        ;;
+        *)
+            echo -e "\033[31mUsage: $0 [start | stop | restart | reload] \033[0m"
+            exit 1;
+        ;;
+esac
