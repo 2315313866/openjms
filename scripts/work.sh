@@ -35,7 +35,8 @@ while [[ true ]]; do
 		read_content_check "${host_index}"
 
 		# 打印用户2级菜单，(用户需要在配置文件中配置，如果没有配置则不会打印menu_2菜单，直接以root身份登录)
-		ssh_user_name=$(menu_2 ${host_index})
+		# ssh_user_name;
+		menu_2 ${host_index}
 
 		# 拒绝指定命令
 		deny_cmd ${host_index}  ${ssh_user_name}

@@ -34,7 +34,7 @@ menu_2() {
 				# 如果的数字数值不匹配则continue
 				if (( read_user_index < ${#users[@]}  ));then
 					# 条件都匹配，执行下面操作
-					echo "${users[read_user_index]}"
+					ssh_user_name="${users[read_user_index]}"
 					break;
 
 				# 当接收数值为quit则退出上级菜单
@@ -55,7 +55,7 @@ menu_2() {
 			continue;
 		fi
 	else
-		echo "root";
+		ssh_user_name="root";
 	fi
 }
 
