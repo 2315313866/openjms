@@ -16,6 +16,7 @@ menu_2() {
 	local index=$1
 	eval "local users=(\${inventory_host_${index}[login_user]})"
 	
+	# 当${users} 不为空时
 	if [[ ! ${users} =~ ^( )*$ ]];then
 		
 		read_string_2="请输入需要登录的用户编号【quit切换上级菜单】："
@@ -25,7 +26,7 @@ menu_2() {
 			clear;
 			printf "$menu_user"
 			read -e -p "${read_string_2}" read_user_index
-			read_string_2="错误请重新输入【quit切换上级菜单】："
+			
 			
 			# 匹配数字或quit
 			if [[  ${read_user_index} =~ ^([0-9]+|quit)$ ]]; then
@@ -33,7 +34,7 @@ menu_2() {
 				# 如果的数字数值不匹配则continue
 				if (( read_user_index < ${#users[@]}  ));then
 					# 条件都匹配，执行下面操作
-					ssh_user_name=${users[read_user_index]};
+					echo "${users[read_user_index]}"
 					break;
 
 				# 当接收数值为quit则退出上级菜单
@@ -42,6 +43,9 @@ menu_2() {
 					read_string_1="返回成功，请重新输入需要登录的主机【quit退出】："
 					break;
 				fi
+			else
+				read_string_2="错误请重新输入【quit切换上级菜单】："
+				continue;
 			fi
 
 		done
@@ -50,6 +54,8 @@ menu_2() {
 		if [[ ${read_user_index} == quit ]]; then
 			continue;
 		fi
+	else
+		echo "root";
 	fi
 }
 

@@ -35,19 +35,19 @@ while [[ true ]]; do
 		read_content_check "${host_index}"
 
 		# 打印用户2级菜单，(用户需要在配置文件中配置，如果没有配置则不会打印menu_2菜单，直接以root身份登录)
-		menu_2 ${host_index}
-
+		ssh_user_name=$(menu_2 ${host_index})
 
 		# 拒绝指定命令
-		deny_cmd ${host_index}  ${ssh_user_name:-root}
+		deny_cmd ${host_index}  ${ssh_user_name}
 
 		# 登录指定主机
-		ssh_task ${host_index}  ${ssh_user_name:-root}
+		ssh_task ${host_index}  ${ssh_user_name}
 
 		# 退出后将禁用的命令允许
-		allow_cmd ${host_index}  ${ssh_user_name:-root}
+		allow_cmd ${host_index}  ${ssh_user_name}
+
+		# 当跳转到后端主机后，代码会在此处卡主，退出后会从此处继续执行后续的代码
 		read_string_1="退出成功，是否继续登录其他主机？[quit退出堡垒机]: "
 
 done
-
 
