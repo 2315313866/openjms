@@ -23,6 +23,7 @@ start() {
      # 数据初始化完成后批量创建用户
      { data_array reload && bash scripts/push_login_user.sh;  }&
      sed -i '/scripts\/work\.sh/d' /root/.bashrc
+     # 如果
      echo "bash ${work_task_script}" >> /root/.bashrc
      
      
